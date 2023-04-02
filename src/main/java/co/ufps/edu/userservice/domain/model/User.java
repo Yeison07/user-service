@@ -1,11 +1,14 @@
 package co.ufps.edu.userservice.domain.model;
 
+import java.util.List;
+
 public class User {
 
     private String email;
     private String password;
     private String name;
     private String lastName;
+    private List<Long>projectsList;
 
     public User() {
     }
@@ -47,5 +50,13 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public List<Long> getProjectsList() {
+        return projectsList;
+    }
+
+    public void setProjectsList(List<Long> projectsList) {
+        this.projectsList = projectsList;
     }
 }

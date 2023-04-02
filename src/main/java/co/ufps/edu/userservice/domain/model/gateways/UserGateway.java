@@ -7,9 +7,11 @@ import java.util.List;
 public interface UserGateway {
 
     User save(User user);
-    User deleteById(String email);
+    void deleteById(String email);
     User findById(String email);
     List<User> findAllUser();
+    List<Object>findAllProjectsByUser(String id);
+    User assignProject(User user,Long idProject);
 
 
 }

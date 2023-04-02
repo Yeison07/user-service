@@ -17,8 +17,8 @@ public class UserUseCase {
         return gateway.save(user);
     }
 
-    public User deleteUserByEmail(String email) {
-        return gateway.deleteById(email);
+    public void deleteUserByEmail(String email) {
+        gateway.deleteById(email);
     }
 
     public User findByEmail(String email) {
@@ -29,5 +29,11 @@ public class UserUseCase {
         return gateway.findAllUser();
     }
 
+    public List<Object> findAllProjectsByUserId(String id){
+        return gateway.findAllProjectsByUser(id);
+    }
 
+    public User assignProjectToUser(User user,Long idProject){
+         return gateway.assignProject(user,idProject);
+    }
 }

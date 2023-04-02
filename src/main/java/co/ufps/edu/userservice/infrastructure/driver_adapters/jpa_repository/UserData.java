@@ -1,10 +1,12 @@
 package co.ufps.edu.userservice.infrastructure.driver_adapters.jpa_repository;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -18,6 +20,9 @@ public class UserData {
     private String name;
     @Column(nullable = false)
     private String lastName;
+    @OneToMany
+    @Column(name = "projectId")
+    private List<ProjectIdsData> projectIdsData = new ArrayList<>();
 
     public UserData() {
     }
@@ -60,4 +65,9 @@ public class UserData {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public List<ProjectIdsData> getProjectIdsData() {
+        return projectIdsData;
+    }
+
 }
