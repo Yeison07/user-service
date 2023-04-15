@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
@@ -37,9 +39,11 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/getProjectByUserId",method = RequestMethod.GET)
-    public ResponseEntity<Object> getProjectByUserId(@RequestParam String email){
-        var projects=useCase.findAllProjectsByUserId(email);
+    @CrossOrigin(origins = "http://localhost:5173")
+    @RequestMapping(path = "/getProjectByUserId",method = RequestMethod.POST)
+    public ResponseEntity<Object> getProjectByUserId(@RequestBody User user){
+        System.err.println(user.getEmail());
+        var projects=useCase.findAllProjectsByUserId(user.getEmail());
         if (projects==null || projects.isEmpty()){
             String body="Theres not projects register with that email";
             return new ResponseEntity<>(body,HttpStatus.NOT_FOUND);
@@ -49,6 +53,7 @@ public class UserController {
 
     @RequestMapping(path = "/assignProjectToUser",method = RequestMethod.POST)
     public ResponseEntity<Object> assignProjectToUser(@RequestParam Long id,@RequestBody User user){
+
         var userResponse=useCase.assignProjectToUser(user,id);
         if (userResponse==null){
             String body="Its mandatory to send the id of the project and the user email, make sure that the project id you send exits";
@@ -56,6 +61,16 @@ public class UserController {
         }
 
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/getAllProjectsDataById",method = RequestMethod.POST)
+    public ResponseEntity<Object> findAllProjectsById(@RequestBody List<Long> projectsId){
+        var projects=useCase.getProjectsDataById(projectsId);
+        if (projects==null){
+            String message="The requested resource was not found";
+            return new ResponseEntity<>(message,HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(projects,HttpStatus.OK);
     }
 
 }

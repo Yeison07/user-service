@@ -12,6 +12,7 @@ public interface UserGateway {
     List<User> findAllUser();
     List<Object>findAllProjectsByUser(String id);
     User assignProject(User user,Long idProject);
+    List<Object> findAllProjectsDataById(List<Long>projectsId);
 
 
 }

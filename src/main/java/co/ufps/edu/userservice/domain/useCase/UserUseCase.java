@@ -36,4 +36,8 @@ public class UserUseCase {
     public User assignProjectToUser(User user,Long idProject){
          return gateway.assignProject(user,idProject);
     }
+
+    public List<Object> getProjectsDataById(List<Long> projectsId){
+        return gateway.findAllProjectsDataById(projectsId);
+    }
 }

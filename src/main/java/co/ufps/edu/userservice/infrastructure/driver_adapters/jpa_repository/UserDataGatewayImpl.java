@@ -2,8 +2,9 @@ package co.ufps.edu.userservice.infrastructure.driver_adapters.jpa_repository;
 
 import co.ufps.edu.userservice.domain.model.User;
 import co.ufps.edu.userservice.domain.model.gateways.UserGateway;
+import co.ufps.edu.userservice.infrastructure.feign_client.ProjectFeignClient;
 import co.ufps.edu.userservice.infrastructure.mapper.MapperUser;
-import jakarta.persistence.EntityNotFoundException;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,11 +14,13 @@ public class UserDataGatewayImpl implements UserGateway {
 
     private final MapperUser mapperUser;
     private final UserDataJpaRepository repository;
+    private final ProjectFeignClient projectFeignClient;
 
 
-    public UserDataGatewayImpl(MapperUser mapperUser, UserDataJpaRepository repository) {
+    public UserDataGatewayImpl(MapperUser mapperUser, UserDataJpaRepository repository, ProjectFeignClient projectFeignClient) {
         this.mapperUser = mapperUser;
         this.repository = repository;
+        this.projectFeignClient = projectFeignClient;
     }
 
     @Override
@@ -59,8 +62,18 @@ public class UserDataGatewayImpl implements UserGateway {
         project.setProjectsId(idProject);
         UserData userData= mapperUser.toUserData(user);
         userData.getProjectIdsData().add(project);
-
+        try {
         return mapperUser.toUser(repository.save(userData));
+        }
+        catch (JpaObjectRetrievalFailureException e){
+            System.err.println(e);
+            return null;
+        }
 
+    }
+
+    @Override
+    public List<Object> findAllProjectsDataById(List<Long> projectsId) {
+        return projectFeignClient.getProjectByUserId(projectsId);
     }
 }
