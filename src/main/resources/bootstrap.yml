@@ -5,15 +5,3 @@ spring:
     config:
       enabled: true
       uri: http://localhost:8081
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost/userdevdb
-    username: root
-    password: 1234
-  jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-
-

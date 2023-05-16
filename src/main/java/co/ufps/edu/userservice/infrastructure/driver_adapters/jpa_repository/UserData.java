@@ -2,17 +2,15 @@ package co.ufps.edu.userservice.infrastructure.driver_adapters.jpa_repository;
 
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
 public class UserData {
 
     @Id
+    @Column
     private String email;
     @Column(nullable = false)
     private String password;
@@ -20,9 +18,10 @@ public class UserData {
     private String name;
     @Column(nullable = false)
     private String lastName;
-    @OneToMany
-    @Column(name = "projectId")
-    private List<ProjectIdsData> projectIdsData = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "users_projects",
+    joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "project_id"))
+    private Set<ProjectIdsData> projectIdsData = new HashSet<>();
 
     public UserData() {
     }
@@ -66,8 +65,11 @@ public class UserData {
         this.lastName = lastName;
     }
 
-    public List<ProjectIdsData> getProjectIdsData() {
+    public Set<ProjectIdsData> getProjectIdsData() {
         return projectIdsData;
     }
 
+    public void setProjectIdsData(Set<ProjectIdsData> projectIdsData) {
+        this.projectIdsData = projectIdsData;
+    }
 }

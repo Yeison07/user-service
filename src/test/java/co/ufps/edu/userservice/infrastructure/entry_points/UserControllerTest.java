@@ -49,7 +49,19 @@ class UserControllerTest  {
         List<User>users= Arrays.asList(user1,user2,user3);
         when(useCase.findAllUsers()).thenReturn(users);
         var result= userController.getAllUser();
+        assertEquals(result.getStatusCode(),HttpStatus.OK);
         assertEquals(result.getBody(),users);
 
+    }
+
+    @Test
+    public void testFindUser(){
+        User user1= new User("test1@hotmail.com","123","nameTest1","lastNameTest1");
+        User user2= new User("test2@hotmail.com","123","nameTest2","lastNameTest2");
+
+        when(useCase.findByEmail("user1")).thenReturn(user1);
+        var result= userController.getUserById("user1");
+        assertEquals(result.getStatusCode(),HttpStatus.OK);
+        assertEquals(result.getBody(),user1);
     }
 }

@@ -7,7 +7,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 @Entity
-@Table(name = "projectId")
+@Table(name = "projects_ids")
 public class ProjectIdsData {
     @Id
     private Long projectsId;

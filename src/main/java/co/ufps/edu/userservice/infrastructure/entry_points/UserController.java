@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users")
+@CrossOrigin
 public class UserController {
 
     private final UserUseCase useCase;
@@ -39,7 +40,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
+    
     @RequestMapping(path = "/getProjectByUserId",method = RequestMethod.POST)
     public ResponseEntity<Object> getProjectByUserId(@RequestBody User user){
         System.err.println(user.getEmail());
