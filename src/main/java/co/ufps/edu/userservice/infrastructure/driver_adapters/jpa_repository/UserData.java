@@ -20,7 +20,7 @@ public class UserData {
     private String lastName;
     @ManyToMany
     @JoinTable(name = "users_projects",
-    joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "project_id"))
+    joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "project_id_u"))
     private Set<ProjectIdsData> projectIdsData = new HashSet<>();
 
     public UserData() {
