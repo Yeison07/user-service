@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface UserDataJpaRepository extends JpaRepository <UserData, String>{
 
-    @Query(value = "SELECT p.project_ids_data_projects_id " +
-            "FROM user_project_ids_data p where :email=p.user_data_email",nativeQuery = true)
+    @Query(value = "SELECT p.project_id_u " +
+            "FROM users_projects p where p.user_id=:email",nativeQuery = true)
     List<Object> projectsByUser(@Param("email") String email);
 
 

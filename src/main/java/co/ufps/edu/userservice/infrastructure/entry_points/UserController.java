@@ -43,7 +43,6 @@ public class UserController {
 
     @RequestMapping(path = "/getProjectByUserId", method = RequestMethod.POST)
     public ResponseEntity<Object> getProjectByUserId(@RequestBody User user) {
-        System.err.println(user.getEmail());
         var projects = useCase.findAllProjectsByUserId(user.getEmail());
         if (projects == null || projects.isEmpty()) {
             String body = "Theres not projects register with that email";
